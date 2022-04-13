@@ -1,19 +1,32 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NewsApp.Data;
+using NewsApp.Models;
 
 namespace NewsApp.Controllers
 {
-	public class HomeController : Controller
-	{
-		public IActionResult Index()
-		{
-			return View();
-		}
 
-		public IActionResult GetNews()
+	[ApiController]
+	[Route("api/[controller]")]
+	public class HomeController : ControllerBase
+	{
+		private readonly Context _context;
+		public HomeController(Context context)
 		{
-			return Redirect("~/News");
+			_context = context;
+		}
+		[HttpGet]
+		public JsonResult Get()
+		{
+			var latest = _context.News
+				.Where(m => m.NewsId != 0)
+				.OrderByDescending(m => m.NewsId)
+				.Take(3);
+
+			
+			return new JsonResult(latest);
 		}
 	}
 }

@@ -10,10 +10,12 @@ namespace NewsApp.Controllers
 	public class AdminController : Controller
 	{
 		private readonly Context _context;
+		IWebHostEnvironment _appEnvironment;
 
-		public AdminController(Context context)
+		public AdminController(Context context, IWebHostEnvironment appEnvironment)
 		{
 			_context = context;
+			_appEnvironment = appEnvironment;
 		}
 		// GET: News
 		public async Task<IActionResult> Index()
@@ -62,15 +64,15 @@ namespace NewsApp.Controllers
 				};
 				if (uploadedFile != null)
 				{
-					string path = "/Files/" + uploadedFile.FileName;
+					string path = "Files/" + uploadedFile.FileName;
 
-					using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+					using (var fileStream = new FileStream(path, FileMode.Create))
 					{
 						await uploadedFile.CopyToAsync(fileStream);
 					}
 
 					news.NewsImageName = uploadedFile.FileName;
-					news.NewsImagePath = "https://localhost:7245" + path;
+					news.NewsImagePath = path;
 				}
 
 				_context.News.Add(news);

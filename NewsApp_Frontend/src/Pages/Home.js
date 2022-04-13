@@ -9,7 +9,7 @@ export default class Home extends Component{
     }
 
     refreshList(){
-        fetch(variables.API_URL+'news')
+        fetch(variables.API_URL+'home')
         .then(response=>response.json())
         .then(data=>{
             this.setState({news:data});
@@ -40,6 +40,7 @@ export default class Home extends Component{
                             <td>{n.NewsHeader}</td>
                             <td>{n.NewsSubtitle}</td>
                             <td>{n.NewsText}</td>
+                            <td><img src={n.NewsImagePath}/></td>
                         </tr>
                     )}
                 </tbody>

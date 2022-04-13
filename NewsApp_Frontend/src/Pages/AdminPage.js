@@ -43,6 +43,7 @@ export default class AdminPage extends Component{
     changeNewsImage =(e)=>{
         this.setState({DepartmentName:e.target.value});
     }
+    
     addClick(){
         this.setState({
             modalTitle:"Add News",

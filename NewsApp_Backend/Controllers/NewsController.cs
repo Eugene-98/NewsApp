@@ -26,6 +26,13 @@ namespace NewsApp.Controllers
             return new JsonResult(_context.News);
         }
 
+        [HttpGet("{id}")]
+        public JsonResult Details(int id)
+		{
+            News news = _context.News.FirstOrDefault(n => n.NewsId == id);
+            return new JsonResult(news);
+		}
+
         // POST: News/Create
 
         [HttpPost]
