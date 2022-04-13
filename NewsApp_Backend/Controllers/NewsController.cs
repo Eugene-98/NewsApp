@@ -20,90 +20,74 @@ namespace NewsApp.Controllers
         }
 
         // GET: News
-       [HttpGet] 
+        [HttpGet]
         public JsonResult Get()
         {
             return new JsonResult(_context.News);
         }
 
         // POST: News/Create
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult Post(NewsViewModel model, IFormFile uploadedFile)
         {
-            if (ModelState.IsValid)
+            News news = new News
             {
-	            News news = new News
-	            {
-                    NewsName = model.NewsName,
-                    NewsHeader = model.NewsHeader,
-                    NewsSubtitle = model.NewsSubtitle,
-                    NewsText = model.NewsText,
-	            };
-	            if (uploadedFile != null)
-	            {
-		            string path = "/Files/" + uploadedFile.FileName;
+                NewsName = model.NewsName,
+                NewsHeader = model.NewsHeader,
+                NewsSubtitle = model.NewsSubtitle,
+                NewsText = model.NewsText,
+            };
+            if (uploadedFile != null)
+            {
+                string path = "/Files/" + uploadedFile.FileName;
 
-		            using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-		            {
-			            uploadedFile.CopyTo(fileStream);
-                    }
- 
-		            news.NewsImageName = uploadedFile.FileName;
-                    news.NewsImagePath = "https://localhost:7245" + path;
-	            }
-
-                 _context.News.Add(news);
-                 _context.SaveChanges();
-
-                return new JsonResult(news);
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    uploadedFile.CopyTo(fileStream);
+                }
+                news.NewsImageName = uploadedFile.FileName;
+                news.NewsImagePath = path;
             }
             else
             {
-	            ModelState.AddModelError("", "Invalid form");
+                return new JsonResult("Error");
             }
+            _context.News.Add(news);
+            _context.SaveChanges();
 
-            return new JsonResult(model);
+            return new JsonResult("Added Successfully");
         }
-        // POST: News/Edit/5
 
         [HttpPut("{id}")]
-        public void Put(int id,  News news)
+        public JsonResult Put(int id,  News news)
         {
             if (id != news.NewsId)
             {
-                
+                return new JsonResult("Error");
             }
-
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                     _context.Update(news);
-                     _context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                   
-                }
+                _context.Update(news);
+                _context.SaveChanges();
             }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+            return new JsonResult("Updated Successfully");
         }
 
         // GET: News/Delete/5
         [HttpDelete("{id}")]
-        public void Delete(int? id)
+        public JsonResult Delete(int? id)
         {
-            if (id == null)
-            { 
-            }
 
             var news =  _context.News.FirstOrDefault(m => m.NewsId == id);
-            if (news == null)
-            {
-            }
+            _context.News.Remove(news);
+            return new JsonResult("Deleted Successfully");
 
-           
         }
     }
 }

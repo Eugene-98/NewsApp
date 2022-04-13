@@ -1,3 +1,4 @@
+import { Carousel } from "bootstrap";
 import React,{Component} from "react";
 import { variables } from '../Variables';
 
@@ -24,6 +25,7 @@ export default class Home extends Component{
             news
         }=this.state;
         return (
+            <>
             <table className='table table-striped' aria-labelledby="tabelLabel">
                 <thead>
                     <tr>
@@ -42,6 +44,7 @@ export default class Home extends Component{
                     )}
                 </tbody>
             </table>
+            </>
         );
     }
 }

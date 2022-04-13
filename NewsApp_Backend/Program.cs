@@ -48,9 +48,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-	endpoints.MapControllers();
-});
+app.MapControllerRoute(
+	name: "default",
+	pattern: "{controller=Admin}/{action=Index}/{id?}");
 
 app.Run();

@@ -4,6 +4,7 @@ import logo from './logo.png'
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 import Home from "../Pages/Home";
 import Allnews from "../Pages/Allnews";
+import AdminPage from "../Pages/AdminPage";
 
 export default class Header extends Component {
     render() {
@@ -25,6 +26,7 @@ export default class Header extends Component {
                         <Nav className="me-auto">
                             <NavLink href="/">Home</NavLink>
                             <NavLink href="/allnews">All News</NavLink>
+                            <NavLink href="/adminPage">Admin</NavLink>
                         </Nav>
                         <Form className="d-flex">
                             <FormControl
@@ -42,6 +44,7 @@ export default class Header extends Component {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/allnews" element={<Allnews/>}/>
+                    <Route path="/adminPage" element={<AdminPage/>}/>
                 </Routes>
             </Router>
             </>
