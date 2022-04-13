@@ -1,7 +1,12 @@
+
 import React,{Component} from "react";
-import { Card, Container, Row, Image } from "react-bootstrap";
+import { Card, Container, Row, Image, Col, Button, NavLink } from "react-bootstrap";
+import { Outlet, Route, Router, Routes, useOutletContext } from "react-router-dom";
 import { variables } from '../Variables';
-export default class Allnews extends Component{
+
+
+
+export default class News extends Component{
     constructor(props) {
         super(props);
         this.state = { news: []};
@@ -24,21 +29,7 @@ export default class Allnews extends Component{
             news
         }=this.state;
         return (
-            <>
-            {news.map(n =>
-            <Container fluid="md" key={n.NewsID}>
-                <Row >
-                <Image src={variables.FILES_URL+n.NewsImagePath}/>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title>{n.NewsHeader}</Card.Title>
-                        <Card.Text>{n.NewsSubtitle}</Card.Text>
-                    </Card.Body>
-                </Card>
-                </Row>
-            </Container>
-            )}
-            </>
+            <Outlet context={news}/>
         );
     }
 }

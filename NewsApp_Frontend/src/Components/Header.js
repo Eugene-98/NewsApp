@@ -1,11 +1,49 @@
 import React, { Component } from "react";
-import { Button, Container, Form, FormControl, Nav, Navbar, NavLink } from "react-bootstrap";
+import { Button, Container, Form, FormControl, Nav, Navbar, NavLink, Row, Col, Card, Image } from "react-bootstrap";
 import logo from './logo.png'
-import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Link, useOutletContext, useParams} from 'react-router-dom';
 import Home from "../Pages/Home";
-import Allnews from "../Pages/Allnews";
-import AdminPage from "../Pages/AdminPage";
+import News from "../Pages/Allnews";
+import { variables } from '../Variables';
 
+
+function Details(){
+    const news = useOutletContext();
+    let {newsId} = useParams();
+    const news1 = news.find(n=>n.id == newsId);
+    if (news1===undefined)
+        return <h2>Not Founded</h2>;
+    else
+        return(
+            <img src={variables.FILES_URL+news1.NewsImagePath}/>
+        );
+}
+
+function NewsList(){
+    const news = useOutletContext();
+    return (
+    <div>
+        {news.map(n =>
+            <Container fluid="md" key={n.NewsId}>
+                <Row >
+                <Col>
+                <Image src={variables.FILES_URL+n.NewsImagePath}/>
+                </Col>
+                <Col>
+                <Card style={{ width: '100%' }}>
+                    <Card.Body>
+                        <Card.Title>{n.NewsHeader}</Card.Title>
+                        <Card.Text>{n.NewsSubtitle}</Card.Text>
+                        <NavLink href={'/allnews/'+n.NewsId}>More</NavLink>
+                    </Card.Body>
+                </Card>
+                </Col>
+                </Row>
+            </Container>
+            )}
+    </div>
+    )
+}
 export default class Header extends Component {
     render() {
         return (
@@ -42,7 +80,10 @@ export default class Header extends Component {
             <Router>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
-                    <Route path="/allnews" element={<Allnews/>}/>
+                    <Route path="/allnews" element={<News/>}>
+                        <Route index element={<NewsList/>}/>
+                        <Route path=":id" element={<Details/>}/>
+                    </Route>
                 </Routes>
             </Router>
             </>

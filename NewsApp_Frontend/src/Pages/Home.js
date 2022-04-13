@@ -1,4 +1,4 @@
-import { Carousel } from "bootstrap";
+import { Carousel, Item, Cap } from "bootstrap";
 import React,{Component} from "react";
 import { variables } from '../Variables';
 
@@ -27,20 +27,12 @@ export default class Home extends Component{
         return (
             <>
             <table className='table table-striped' aria-labelledby="tabelLabel">
-                <thead>
-                    <tr>
-                        <th>Header</th>
-                        <th>Subtitle</th>
-                        <th>Text</th>
-                    </tr>
-                </thead>
                 <tbody>
                     {news.map(n =>
                         <tr key={n.NewsID}>
+                            <td><img src={variables.FILES_URL+n.NewsImagePath}/></td>
                             <td>{n.NewsHeader}</td>
                             <td>{n.NewsSubtitle}</td>
-                            <td>{n.NewsText}</td>
-                            <td><img src={n.NewsImagePath}/></td>
                         </tr>
                     )}
                 </tbody>
