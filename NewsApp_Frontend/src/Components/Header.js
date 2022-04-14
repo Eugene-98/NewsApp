@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { Button, Container, Form, FormControl, Nav, Navbar, NavLink, Row, Col, Card, Image } from "react-bootstrap";
+import { Button, Container, Form, FormControl, Nav, Navbar,
+     NavLink, Row, Col, Card, Image, DropdownButton, Dropdown, Item,
+     ButtonGroup } from "react-bootstrap";
 import logo from './logo.png'
 import {BrowserRouter as Router, Routes, Route, Link, useOutletContext, useParams} from 'react-router-dom';
 import Home from "../Pages/Home";
 import News from "../Pages/Allnews";
 import { variables } from '../Variables';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTranslation } from "react-i18next";
 
 
 function Details(){
@@ -59,8 +62,11 @@ function NewsList(){
     </div>
     )
 }
-export default class Header extends Component {
-    render() {
+function Header(){
+        const { t, i18n } = useTranslation();
+        const changeLanguage = (language) => {
+            i18n.changeLanguage(language);
+        };
         return (
             <>
             <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
@@ -77,17 +83,13 @@ export default class Header extends Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <NavLink href="/">Home</NavLink>
-                            <NavLink href="/allnews">All News</NavLink>
+                            <NavLink href="/">{t("description.home")}</NavLink>
+                            <NavLink href="/allnews">{t("description.allNews")}</NavLink>
                         </Nav>
-                        <Form className="d-flex">
-                            <FormControl
-                                type="text"
-                                placeholder="Search"
-                                className="d-inline mx-2"
-                            />
-                            <Button variant="outline-info">Search</Button>
-                        </Form>
+                        <DropdownButton as={ButtonGroup} title={t("description.lang")} id="bg-nested-dropdown">
+                            <Dropdown.Item onClick={() => changeLanguage("en")}>EN</Dropdown.Item>
+                            <Dropdown.Item onClick={() => changeLanguage("ru")}>RU</Dropdown.Item>
+                        </DropdownButton>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -104,4 +106,4 @@ export default class Header extends Component {
             </>
         );
     }
-}
+    export default Header;

@@ -1,7 +1,9 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using NewsApp.Data;
 using NewsApp.Models;
 using NewsApp.ViewModels;
@@ -11,7 +13,7 @@ namespace NewsApp.Controllers
 	public class AdminController : Controller
 	{
 		private readonly Context _context;
-		IWebHostEnvironment _appEnvironment;
+		private readonly IWebHostEnvironment _appEnvironment;
 
 		public AdminController(Context context, IWebHostEnvironment appEnvironment)
 		{
@@ -171,6 +173,18 @@ namespace NewsApp.Controllers
 		private bool NewsExists(int id)
 		{
 			return _context.News.Any(e => e.NewsId == id);
+		}
+
+		[HttpPost]
+		public IActionResult SetLanguage(string culture, string returnUrl)
+		{
+			Response.Cookies.Append(
+				CookieRequestCultureProvider.DefaultCookieName,
+				CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+				new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+			);
+
+			return LocalRedirect(returnUrl);
 		}
 	}
 }

@@ -1,5 +1,11 @@
-﻿<!DOCTYPE html>
+﻿
 @model IEnumerable<NewsApp.Models.News>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using NewsApp_Backend
+ 
+@inject IViewLocalizer Localizer
+ 
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @{
     ViewData["Title"] = "Index";
@@ -8,28 +14,28 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create" >Create New</a>
+    <a asp-action="Create" >@SharedLocalizer["Create"]</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NewsName)
+                @SharedLocalizer["NewsName"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsHeader)
+                @SharedLocalizer["NewsHeader"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsSubtitle)
+                @SharedLocalizer["NewsSubtitle"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsImageName)
+                @SharedLocalizer["NewsImageName"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsImagePath)
+                @SharedLocalizer["NewsImagePath"]
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NewsText)
+                @SharedLocalizer["NewsText"]
             </th>
             <th></th>
         </tr>
@@ -56,9 +62,9 @@
                 @Html.DisplayFor(modelItem => item.NewsText)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.NewsId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.NewsId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.NewsId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.NewsId">@SharedLocalizer["Edit"]</a> |
+                <a asp-action="Details" asp-route-id="@item.NewsId">@SharedLocalizer["Details"]</a> |
+                <a asp-action="Delete" asp-route-id="@item.NewsId">@SharedLocalizer["Delete"]</a>
             </td>
         </tr>
 }
