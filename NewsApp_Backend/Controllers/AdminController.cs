@@ -26,7 +26,7 @@ namespace NewsApp.Controllers
 			return View(await _context.News.ToListAsync());
 		}
 
-		// GET: News/Details/5
+		[Authorize(Roles = "admin")]
 		public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null)
@@ -44,14 +44,13 @@ namespace NewsApp.Controllers
 			return View(news);
 		}
 
-		// GET: News/Create
+		[Authorize(Roles = "admin")]
 		public IActionResult Create()
 		{
 			return View();
 		}
 
-		// POST: News/Create
-
+		[Authorize(Roles = "admin")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(NewsViewModel model, IFormFile uploadedFile)
@@ -91,7 +90,7 @@ namespace NewsApp.Controllers
 			return View(model);
 		}
 
-		// GET: News/Edit/5
+		[Authorize(Roles = "admin")]
 		public async Task<IActionResult> Edit(int? id)
 		{
 			if (id == null)
@@ -107,8 +106,7 @@ namespace NewsApp.Controllers
 			return View(news);
 		}
 
-		// POST: News/Edit/5
-
+		[Authorize(Roles = "admin")]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(int id, News news)
@@ -141,7 +139,7 @@ namespace NewsApp.Controllers
 			return View(news);
 		}
 
-		// GET: News/Delete/5
+		[Authorize(Roles = "admin")]
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null)
@@ -159,7 +157,7 @@ namespace NewsApp.Controllers
 			return View(news);
 		}
 
-		// POST: News/Delete/5
+		[Authorize(Roles = "admin")]
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
