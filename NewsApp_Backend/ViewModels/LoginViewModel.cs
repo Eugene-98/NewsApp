@@ -4,7 +4,7 @@ namespace NewsApp.ViewModels
 {
 	public class LoginViewModel
 	{
-		[Required(ErrorMessage = "Username тot specified ")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email not valid")]
 		public string Username { get; set; }
 
 		[Required(ErrorMessage = "password not specified")]

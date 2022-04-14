@@ -30,9 +30,11 @@ export default class Home extends Component{
                 <tbody>
                     {news.map(n =>
                         <tr key={n.NewsID}>
+                        <a href={'/allnews/'+n.NewsId} className="text-decoration-none">
                             <td><img src={variables.FILES_URL+n.NewsImagePath}/></td>
                             <td>{n.NewsHeader}</td>
                             <td>{n.NewsSubtitle}</td>
+                        </a>
                         </tr>
                     )}
                 </tbody>

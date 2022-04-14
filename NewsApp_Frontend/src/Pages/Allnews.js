@@ -1,7 +1,6 @@
 
 import React,{Component} from "react";
-import { Card, Container, Row, Image, Col, Button, NavLink } from "react-bootstrap";
-import { Outlet, Route, Router, Routes, useOutletContext } from "react-router-dom";
+import { Outlet} from "react-router-dom";
 import { variables } from '../Variables';
 
 

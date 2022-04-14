@@ -5,8 +5,8 @@ namespace NewsApp.ViewModels
 {
 	public class RegisterViewModel
 	{
-		[Required]
-		[Display(Name = "Username")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email not valid")]
+		[Display(Name = "Email")]
 		public string Username { get; set; }
 		[Required]
 		[DataType(DataType.Password)]

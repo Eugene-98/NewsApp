@@ -46,7 +46,7 @@ public class AccountController : Controller
 
 				await Authenticate(user);
 
-				return RedirectToAction("Index", "Home");
+				return Redirect("~/Admin/Index");
 			}
 			else
 			{
@@ -75,7 +75,7 @@ public class AccountController : Controller
 			{
 				await Authenticate(user);
 
-				return Redirect("~/Home/Index");
+				return Redirect("~/Admin/Index");
 			}
 			ModelState.AddModelError("", "Invalid username or password");
 		}

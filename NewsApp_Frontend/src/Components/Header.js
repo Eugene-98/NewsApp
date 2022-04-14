@@ -5,17 +5,31 @@ import {BrowserRouter as Router, Routes, Route, Link, useOutletContext, useParam
 import Home from "../Pages/Home";
 import News from "../Pages/Allnews";
 import { variables } from '../Variables';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function Details(){
     const news = useOutletContext();
-    let {newsId} = useParams();
-    const news1 = news.find(n=>n.id == newsId);
+    const params = useParams();
+    const Id = params.id;
+    const news1 = news.find(n=>n.NewsId == Id);
     if (news1===undefined)
         return <h2>Not Founded</h2>;
     else
         return(
-            <img src={variables.FILES_URL+news1.NewsImagePath}/>
+            <div>
+            <div>
+                <h2>{news1.NewsHeader}</h2> 
+            </div>
+            <div>
+                <img src={variables.FILES_URL+news1.NewsImagePath} className="rounded mx-auto d-block"/>
+            </div>
+            <div>
+                <p>{news1.NewsSubtitle}</p>
+                <p>{news1.NewsText}</p>
+            </div>
+            </div>
+            
         );
 }
 
@@ -25,7 +39,8 @@ function NewsList(){
     <div>
         {news.map(n =>
             <Container fluid="md" key={n.NewsId}>
-                <Row >
+            <a href={`/allnews/${n.NewsId}`} className="text-decoration-none">
+                <Row>
                 <Col>
                 <Image src={variables.FILES_URL+n.NewsImagePath}/>
                 </Col>
@@ -34,11 +49,11 @@ function NewsList(){
                     <Card.Body>
                         <Card.Title>{n.NewsHeader}</Card.Title>
                         <Card.Text>{n.NewsSubtitle}</Card.Text>
-                        <NavLink href={'/allnews/'+n.NewsId}>More</NavLink>
                     </Card.Body>
                 </Card>
                 </Col>
                 </Row>
+            </a>
             </Container>
             )}
     </div>

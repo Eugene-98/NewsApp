@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NewsApp.Data;
@@ -17,7 +18,7 @@ namespace NewsApp.Controllers
 			_context = context;
 			_appEnvironment = appEnvironment;
 		}
-		// GET: News
+		[Authorize(Roles = "admin")]
 		public async Task<IActionResult> Index()
 		{
 			return View(await _context.News.ToListAsync());
